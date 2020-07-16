@@ -22,7 +22,6 @@ class Node:
 
     def get_next(self):
         return self.next_node
-
     def set_next(self, new_next):
         # set this node's next_node reference to the passed in node
         self.next_node = new_next
