@@ -1,3 +1,4 @@
+
 """
 Binary search trees are a data structure that enforce an ordering over
 the data they store. That ordering in turn makes it a lot more efficient
@@ -8,6 +9,8 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+from queue import Queue
+from stack import Stack
 
 
 class BSTNode:
@@ -70,7 +73,6 @@ class BSTNode:
     def get_max(self):
         if self.right:
             return self.right.get_max()
-
         return self.value
 
     # Call the function `fn` on the value of each node
@@ -87,26 +89,61 @@ class BSTNode:
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
+
     def in_order_print(self, node):
-        pass
+
+        # Node used to declare None on both
+        if not node:
+            return
+        self.in_order_print(node.left)
+        print(node.value)
+        self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        q = Queue()
+        q.enqueue(node)
+        ans = ''
+        while q:
+            curr = q.dequeue()
+            if not curr:
+                continue
+            ans += str(curr.value) + '\n'
+            q.enqueue(curr.left)
+            q.enqueue(curr.right)
+        print(ans[:-1])
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative depth first traversal
+  # Print the value of every node, starting with the given node,
+  # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        stack = Stack()
+        stack.push(node)
+        ans = ''
+        while stack:
+            curr = stack.pop()
+            if not curr:
+                continue
+            ans += str(curr.value) + '\n'
+            stack.push(curr.right)
+            stack.push(curr.left)
+        print(ans[:-1])
 
-    # Stretch Goals -------------------------
+    # STRETCH Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        if not node:
+            return
+        print(node.value)
+        self.pre_order_dft(node.left)
+        self.pre_order_dft(node.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        if not node:
+            return
+        self.post_order_dft(node.left)
+        self.post_order_dft(node.right)
+        print(node.value)
